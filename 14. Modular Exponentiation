@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+
+int pown(long long x,long long n,long long m){
+	long ans = 1;
+	while(n){
+		if(n%2){
+			ans = (ans * x)%m;
+			n--;
+		}
+		else{
+			x = (x * x)%m;
+			n /= 2;
+		}
+	}
+	return ans%m;
+}
+
+int modularExponentiation(int x, int n, int m) {
+	// Write your code here.
+	return pown(x,n,m);
+}
