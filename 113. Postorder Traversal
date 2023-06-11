@@ -1,0 +1,40 @@
+#include <bits/stdc++.h> 
+/*
+    Following is Binary Tree Node structure:
+    class TreeNode
+    {
+    public:
+        int data;
+        TreeNode *left, *right;
+        TreeNode() : data(0), left(NULL), right(NULL) {}
+        TreeNode(int x) : data(x), left(NULL), right(NULL) {}
+        TreeNode(int x, TreeNode *left, TreeNode *right) : data(x), left(left), right(right) {}
+    };
+*/
+vector<int> getPostOrderTraversal(TreeNode *root)
+{
+    // Write your code here.
+    vector<int> ans;
+    stack<TreeNode*> s;
+    TreeNode* curr = root;
+    while(curr || !s.empty()){
+        while(curr){
+            s.push(curr);
+            curr = curr->left;
+        }
+        TreeNode* temp = s.top()->right;
+        if(temp == NULL){
+            temp = s.top();
+            s.pop();
+            ans.push_back(temp->data);
+            while(!s.empty() && s.top()->right == temp){
+                temp = s.top();
+                s.pop();
+                ans.push_back(temp->data);
+            }
+        }
+        else
+            curr = temp;
+    }
+    return ans;
+}
