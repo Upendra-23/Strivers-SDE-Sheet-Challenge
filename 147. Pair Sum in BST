@@ -1,0 +1,47 @@
+#include <bits/stdc++.h> 
+class BSTIterator {
+    stack<BinaryTreeNode<int>*> s;
+    bool reverse = false;
+public:
+    void pushAll(BinaryTreeNode<int> *root){
+        while(root){
+            s.push(root);
+            if(!reverse) root = root->left;
+            else root = root->right;
+        }
+    }
+
+    BSTIterator(BinaryTreeNode<int> *root, bool isReverse){
+        reverse = isReverse;
+        pushAll(root);
+    }
+
+    int next(){
+        BinaryTreeNode<int> *node = s.top();
+        s.pop();
+        if(!reverse) pushAll(node->right);
+        else pushAll(node->left);
+        return node->data;
+    }
+
+    bool hasNext(){
+        return !s.empty();
+    }
+};
+
+bool pairSumBst(BinaryTreeNode<int> *root, int k)
+{
+    // Write your code here
+    BSTIterator l(root, false);
+    BSTIterator r(root, true);
+
+    int i = l.next();
+    int j = r.next();
+
+    while(i < j){
+        if(i + j == k) return true;
+        if(i + j < k) i = l.next();
+        else j = r.next();
+    }
+    return false;
+}
