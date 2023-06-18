@@ -1,0 +1,27 @@
+int getcnt(vector<vector<int>> &mat,int row,int m,int val){
+        int low = 0;
+        int high = m-1;
+        while(low <= high){
+            int mid = low+(high-low)/2;
+            if(mat[row][mid] <= val) low = mid+1;
+            else high = mid-1;
+        }
+        return low;
+    }
+int getMedian(vector<vector<int>> &mat)
+{
+    // Write your code here.
+        int n = mat.size();
+        int m = mat[0].size();
+        int low = 0;
+        int high = 1e5;
+        while(low <= high){
+            int mid = low+(high-low)/2;
+            int cnt = 0;
+            for(int i=0;i<n;i++)
+                cnt += getcnt(mat,i,m,mid);
+            if(cnt <= (n*m)/2) low = mid+1;
+            else high = mid-1;
+        }
+        return low;
+}
