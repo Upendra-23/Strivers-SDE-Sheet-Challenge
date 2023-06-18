@@ -1,0 +1,28 @@
+#include <bits/stdc++.h> 
+
+    bool isSafe(int node,int n,int col,vector<int> &color,vector<vector<int>> &graph){
+        for(int k=0;k<n;k++){
+            if(k != node && graph[node][k] == 1 && color[k] == col)
+                return false;
+        }
+        return true;
+    }
+    
+    bool dfs(int node,int n,int m,vector<int> &color,vector<vector<int>> &graph){
+        if(node == n) return true;
+        for(int col=1;col<=m;col++){
+            if(isSafe(node,n,col,color,graph)){
+                color[node] = col;
+                if(dfs(node+1,n,m,color,graph))
+                    return true;
+                color[node] = -1;
+            }
+        }
+        return false;
+    }
+string graphColoring(vector<vector<int>> &graph, int m) {
+    // Write your code here
+        int n = graph.size();
+        vector<int> color(n,-1);
+        return dfs(0,n,m,color,graph) ? "YES" : "NO";
+}
