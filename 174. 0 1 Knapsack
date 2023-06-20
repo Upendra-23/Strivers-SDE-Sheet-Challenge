@@ -1,0 +1,21 @@
+int maxProfit(vector<int> &val, vector<int> &wt, int n, int W)
+{
+	// Write your code here
+	 vector<int> prev(W+1,0), curr(W+1,0);
+    for(int i=0;i<=W;i++){
+        if(wt[0] <= i) prev[i] = val[0];
+    }
+
+    for(int ind=1;ind<n;ind++){
+        for(int w=0;w<=W;w++){
+            int nottake = 0+prev[w];
+            int take = 0;
+            if(wt[ind] <= w)
+                take = val[ind]+prev[w-wt[ind]];
+            curr[w] = max(take,nottake);
+        }
+        prev = curr;
+    }
+    
+    return prev[W];
+}
