@@ -1,0 +1,17 @@
+#include <bits/stdc++.h> 
+vector<vector<int>> pwset(vector<int> arr)
+{
+    //Write your code here
+    sort(arr.begin(),arr.end());
+    vector<vector<int>> ans;
+    int n = arr.size();
+    for(int num=0;num<(1 << n);num++){
+        vector<int> ds;
+        for(int bit=0;bit<n;bit++){
+            if(num & (1 << bit))
+                ds.push_back(arr[bit]);
+        }
+        ans.push_back(ds);
+    }
+    return ans;
+}
