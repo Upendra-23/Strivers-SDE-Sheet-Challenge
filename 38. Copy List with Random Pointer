@@ -1,0 +1,55 @@
+#include <bits/stdc++.h>
+
+/*************************************************************
+
+    Following is the LinkedListNode class structure
+
+    template <typename T>   
+    class LinkedListNode
+    {
+        public:
+        T data;
+        LinkedListNode<T> *next;
+        LinkedListNode<T> *random;
+        LinkedListNode(T data)
+        {
+            this->data = data;
+            this->next = NULL;
+        }
+    };
+
+*************************************************************/
+
+LinkedListNode<int> *cloneRandomList(LinkedListNode<int> *head)
+{
+    // Write your code here.
+    if(!head) return NULL;
+    LinkedListNode<int> *curr = head, *front = NULL;
+    while(curr){
+        LinkedListNode<int> *temp = new LinkedListNode<int>(curr->data);
+        temp->random = NULL;
+        temp->next = curr->next;
+        curr->next = temp;
+        curr = temp->next;
+    }
+
+    curr = head;
+    while(curr){
+        if(curr->random)
+            curr->next->random = curr->random->next;
+        curr = curr->next->next;
+    }
+
+    LinkedListNode<int> *dummy = new LinkedListNode<int>(0);
+    LinkedListNode<int> *copy = dummy;
+    curr = head;
+    front = NULL;
+    while(curr){
+        front = curr->next->next;
+        copy->next = curr->next;
+        copy = copy->next;
+        curr->next = front;
+        curr = front;
+    }
+    return dummy->next;
+}
