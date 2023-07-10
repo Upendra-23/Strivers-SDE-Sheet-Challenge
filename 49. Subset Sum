@@ -1,0 +1,16 @@
+#include<bits/stdc++.h>
+void fun(int ind,vector<int> &nums,int sum,vector<int> &ans){
+	if(ind == nums.size()){
+		ans.push_back(sum);
+		return;
+	}
+	fun(ind+1,nums,sum,ans);
+	fun(ind+1,nums,sum+nums[ind],ans);
+}
+vector<int> subsetSum(vector<int> &nums){
+	// Write your code here.	
+	vector<int> ans;
+	fun(0,nums,0,ans);
+	sort(ans.begin(),ans.end());
+	return ans;
+}
