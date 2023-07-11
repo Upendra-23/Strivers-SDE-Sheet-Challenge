@@ -1,0 +1,37 @@
+#include <bits/stdc++.h> 
+class Queue {
+    vector<int> arr;
+    int start;
+    int rear;
+    int N,cnt;
+public:
+    Queue() {
+        N = 5000;
+        start = rear = cnt = 0;
+        arr.resize(N);
+    }
+    
+    bool isEmpty() {
+        return cnt == 0;
+    }
+
+    void enqueue(int data) {
+        if(cnt == N) return;
+        arr[rear%N] = data;
+        rear++;
+        cnt++;
+    }
+
+    int dequeue() {
+        if(cnt == 0) return -1;
+        int val = arr[start];
+        start++;
+        cnt--;
+        return val;
+    }
+
+    int front() {
+        if(cnt == 0) return -1;
+        return arr[start%N];
+    }
+};
