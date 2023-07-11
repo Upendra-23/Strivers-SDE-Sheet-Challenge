@@ -1,0 +1,23 @@
+#include <bits/stdc++.h> 
+
+void insert_at_pos(stack<int> &s,int x){
+	if(s.empty() || x >= s.top())
+		s.push(x);
+	else{
+		int val = s.top();
+		s.pop();
+		insert_at_pos(s,x);
+		s.push(val);
+	}
+}
+
+void sortStack(stack<int> &s)
+{
+	// Write your code here
+	if(!s.empty()){
+		int x = s.top();
+		s.pop();
+		sortStack(s);
+		insert_at_pos(s,x);
+	}
+}
