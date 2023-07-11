@@ -1,0 +1,58 @@
+#include <bits/stdc++.h> 
+// Implement class for minStack.
+class minStack
+{
+	int N = 100000;
+	vector<int> arr;
+	vector<int> minsofar;
+	int topPtr;
+	int minPtr;
+	
+	public:
+		
+		minStack() 
+		{ 
+			arr.resize(N);
+			minsofar.resize(N);
+			topPtr = -1;
+			minPtr = -1;
+		}
+		
+		
+		void push(int num)
+		{
+			topPtr++;
+			arr[topPtr] = num;
+			if(minPtr >= 0){
+				if(minsofar[minPtr] > num)
+					minsofar[++minPtr] = num;
+				else{
+					minsofar[minPtr+1] = minsofar[minPtr];
+					minPtr++;
+				}
+			}
+			else minsofar[++minPtr] = num;
+		}
+		
+		int pop()
+		{
+			if(topPtr == -1) return -1;
+			int val = arr[topPtr];
+			topPtr--;
+			minPtr--;
+			return val;
+		}
+		
+	
+		int top()
+		{
+			if(topPtr == -1) return -1;
+			return arr[topPtr];
+		}
+		
+		int getMin()
+		{
+			if(minPtr == -1) return -1;
+			return minsofar[minPtr];
+		}
+};
