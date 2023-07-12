@@ -1,0 +1,17 @@
+long long getTrappedWater(long long* arr, int n) {
+    // Write your code here.
+    stack<long long> s;
+    long long cnt = 0;
+    for(int i=0;i<n;i++){
+        while(!s.empty() && arr[i] > arr[s.top()]){
+            int h = arr[s.top()];
+            s.pop();
+            if(s.empty()) break;
+            long long width = i-s.top()-1;
+            long long minh = min(arr[i],arr[s.top()]) - h;
+            cnt += width * minh;
+        }
+        s.push(i);
+    }
+    return cnt;
+}
