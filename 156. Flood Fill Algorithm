@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+
+bool isvalid(int row,int col,int n,int m){
+    return row >= 0 && row < n && col >= 0 && col < m;
+}
+
+vector<vector<int>> floodFill(vector<vector<int>> &image, int x, int y, int newColor)
+{
+    // Write your code here.
+    int n = image.size();
+    int m = image[0].size();
+    if(image[x][y] == newColor) return image;
+    int color = image[x][y];
+    image[x][y] = newColor;
+    vector<vector<int>> vis(n,vector<int> (m,0));
+    queue<pair<int,int>> q;
+    q.push({x,y});
+    vis[x][y] = 1;
+
+    int dr[] = {-1,0,0,1};
+    int dc[] = {0,-1,1,0};
+
+    while(!q.empty()){
+        int row = q.front().first;
+        int col = q.front().second;
+        q.pop();
+        for(int i=0;i<4;i++){
+            int nrow = row + dr[i];
+            int ncol = col + dc[i];
+            if(isvalid(nrow,ncol,n,m) && !vis[nrow][ncol] && image[nrow][ncol] == color){
+                vis[nrow][ncol] = 1;
+                image[nrow][ncol] = newColor;
+                q.push({nrow,ncol});
+            }
+        }
+    }
+
+    return image;
+}
