@@ -1,0 +1,37 @@
+#include <bits/stdc++.h> 
+bool isvalid(int row,int col,int n){
+    return row >= 0 && row < n && col >= 0 && col < n;
+}
+void insert(vector<vector<int>> &vis,vector<vector<int>> &ans,int n){
+    vector<int> temp;
+    for(auto it:vis){
+        for(auto i:it)
+            temp.push_back(i);
+    }
+    ans.push_back(temp);
+}
+void dfs(int row,int col,int n,vector<vector<int>> &maze,vector<vector<int>> &vis,vector<vector<int>> &ans){
+    vis[row][col] = 1;
+    if(row == n-1 && col == n-1){
+        insert(vis,ans,n);
+        return;
+    }
+    int dr[] = {-1,0,0,1};
+    int dc[] = {0,-1,1,0};
+    for(int i=0;i<4;i++){
+        int nrow = row + dr[i];
+        int ncol = col + dc[i];
+        if(isvalid(nrow,ncol,n) && !vis[nrow][ncol] && maze[nrow][ncol] == 1){
+            vis[nrow][ncol] = 1;
+            dfs(nrow,ncol,n,maze,vis,ans);
+            vis[nrow][ncol] = 0;
+        }
+    }
+}
+vector<vector<int> > ratInAMaze(vector<vector<int> > &maze, int n){
+  // Write your code here.
+  vector<vector<int>> vis(n,vector<int> (n,0));
+  vector<vector<int>> ans;
+  dfs(0,0,n,maze,vis,ans);
+  return ans; 
+}
