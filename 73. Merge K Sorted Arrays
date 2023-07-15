@@ -1,0 +1,36 @@
+#include <bits/stdc++.h> 
+vector<int> merge(vector<int> &arr1,vector<int> &arr2){
+    vector<int> ans;
+    int n1 = arr1.size();
+    int n2 = arr2.size();
+    int i = 0, j = 0;
+    while(i < n1 && j < n2){
+        if(arr1[i] <= arr2[j]){
+            ans.push_back(arr1[i]);
+            i++;
+        }
+        else{
+            ans.push_back(arr2[j]);
+            j++;
+        }
+    }
+    while(i < n1){
+        ans.push_back(arr1[i]);
+        i++;
+    }
+    while(j < n2){
+        ans.push_back(arr2[j]);
+        j++;
+    }
+    return ans;
+}
+vector<int> dfs(int ind,int k,vector<vector<int>> &karr){
+    if(ind == k-1) return karr[ind];
+    vector<int> arr2 = dfs(ind+1,k,karr);
+    return merge(karr[ind],arr2);
+}
+vector<int> mergeKSortedArrays(vector<vector<int>>&kArrays, int k)
+{
+    // Write your code here. 
+    return dfs(0,k,kArrays);
+}
