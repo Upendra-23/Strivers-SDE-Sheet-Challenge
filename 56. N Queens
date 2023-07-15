@@ -1,0 +1,50 @@
+#include<bits/stdc++.h>
+void store(vector<vector<int>> &board,vector<vector<int>> &ans){
+    vector<int> temp;
+    for(auto it:board){
+        for(auto i:it)
+            temp.push_back(i);
+    }
+    ans.push_back(temp);
+}
+bool isSafe(int row,int col,vector<vector<int>> &board){
+    int n = board.size();
+    int i = row, j = col;
+    while(j >= 0){
+        if(board[i][j] == 1) return false;
+        j--;
+    }
+    i = row, j = col;
+    while(i >= 0 && j >= 0){
+        if(board[i][j] == 1) return false;
+        i--;
+        j--;
+    }
+    i = row, j = col;
+    while(i < n && j >= 0){
+        if(board[i][j] == 1) return false;
+        i++;
+        j--;
+    }
+    return true;
+}
+void dfs(int col,int n,vector<vector<int>> &board,vector<vector<int>> &ans){
+    if(col == n){
+        store(board,ans);
+        return;
+    }
+    for(int row=0;row<n;row++){
+        if(isSafe(row,col,board)){
+            board[row][col] = 1;
+            dfs(col+1,n,board,ans);
+            board[row][col] = 0;
+        }
+    }
+}
+vector<vector<int>> solveNQueens(int n) {
+    // Write your code here.
+     vector<vector<int>> ans;
+     vector<vector<int>> board(n,vector<int> (n,0));
+     dfs(0,n,board,ans);
+     return ans;
+}
